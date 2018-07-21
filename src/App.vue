@@ -1,31 +1,52 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-light" style="background: #3F51B5 !important;">
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-box-open"></i> Shipla</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <router-link :to="{ name: 'home' }" class="nav-item nav-link">Home</router-link>
+
+          <a v-if="signed_in == null" class="nav-item nav-link" href="#">Sign Up</a>
+          <router-link v-if="signed_in == null" class="nav-item nav-link" :to="{ name: 'sign-in' }">Sign In</router-link>
+          <router-link v-if="signed_in" class="nav-item nav-link" :to="{ name: 'containers' }">Containers</router-link>
+          <router-link v-if="signed_in" class="nav-item nav-link" :to="{ name: 'account' }">Account</router-link>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-12">
+          <router-view/>
+        </div>
+
+      </div>
+
     </div>
-    <router-view/>
   </div>
 </template>
 
+<script>
+export default {
+  mounted() {},
+  data: () => {
+    return {
+      signed_in: localStorage.getItem("token")
+    };
+  }
+};
+</script>
+
+
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+body {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  background: rgb(253, 253, 253);
 }
 </style>
