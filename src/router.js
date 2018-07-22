@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Container from './pages/Container.vue'
 import SignIn from './pages/Auth/SignIn.vue'
+import SignUp from './pages/Auth/SignUp.vue'
+
 import Containers from './pages/Containers.vue'
 import Account from './pages/Account.vue'
 import Home from './pages/Home.vue'
@@ -50,6 +52,12 @@ export default new Router({
       path: '/sign-in',
       name: 'sign-in',
       component: SignIn,
+      props: true
+    },
+    {
+      path: '/sign-up',
+      name: 'sign-up',
+      component: SignUp,
       props: true
     }
   ]

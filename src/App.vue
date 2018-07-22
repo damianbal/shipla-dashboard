@@ -34,6 +34,11 @@
 <script>
 export default {
   mounted() {},
+  watch: {
+    '$route': function (to, from) {
+      this.signed_in = localStorage.getItem("token");
+    }
+  },
   data: () => {
     return {
       signed_in: localStorage.getItem("token")
@@ -48,5 +53,12 @@ body {
   font-family: "Poppins", sans-serif;
   font-weight: 300;
   background: rgb(253, 253, 253);
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

@@ -20,24 +20,28 @@
                         </div>
                     </div>
 
-                    <div v-for="(container, idx) in containers" class="row p-2" :key="idx">
-                        <div class="col-12 col-md-4">
-                            {{ container.title }}
-                        </div>
+                    <loading :isLoading="loading"></loading>
 
-                        <div class="col-12 col-md-4">
-                            {{ container.ref }}
-                        </div>
+                    <transition-group name="fade">
+                        <div v-show="!loading" v-for="(container, idx) in containers" class="row p-2" :key="idx">
+                            <div class="col-12 col-md-4">
+                                {{ container.title }}
+                            </div>
 
-                        <div class="col-12 col-md-4 text-center">
-                            <router-link class="btn btn-sm btn-outline-primary" :to="{ name: 'container', params: { reference: container.ref } }">
-                                <i class="fas fa-link"></i> View</router-link>
-                            &nbsp;
-                            <button v-on:click="remove(container.ref)" class="btn btn-sm btn-outline-danger">
-                                <i class="fas fa-trash-alt"></i> Remove</button>
+                            <div class="col-12 col-md-4">
+                                {{ container.ref }}
+                            </div>
 
+                            <div class="col-12 col-md-4 text-center">
+                                <router-link class="btn btn-sm btn-outline-primary" :to="{ name: 'container', params: { reference: container.ref } }">
+                                    <i class="fas fa-link"></i> View</router-link>
+                                &nbsp;
+                                <button v-on:click="remove(container.ref)" class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-trash-alt"></i> Remove</button>
+
+                            </div>
                         </div>
-                    </div>
+                    </transition-group>
                 </div>
 
                 <!--
@@ -55,28 +59,37 @@
 
 <script>
 import { Container, User } from "@/api/shipla-api.js";
+import AddContainer from "@/components/AddContainer";
 
 export default {
   mounted() {
     User.getContainers().then(resp => {
       this.containers = resp.data;
+      this.loading = false;
     });
   },
   methods: {
     reload(ref) {
+      this.containers = [];
       User.getContainers().then(resp => {
         this.containers = resp.data;
+        this.loading = false;
       });
     },
     remove(ref) {
-      Container.remove(ref);
+      this.loading = true;
+      Container.remove(ref).then(resp => {
+        this.reload();
+      });
     }
   },
   data: () => {
     return {
+      loading: true,
       containers: null
     };
-  }
+  },
+  components: { AddContainer }
 };
 </script>
 

@@ -28,6 +28,13 @@ export default {
   mounted() {},
   methods: {
     add() {
+      if(this.title.length < 3) 
+      {
+        alert('Container title must be longer!');
+        return;
+
+      }
+
       Container.add(this.title, data => {
         alert("Created container ref: " + data.ref);
 

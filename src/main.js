@@ -4,6 +4,8 @@ import router from './router'
 
 import axios from "axios"
 
+import Loading from "@/components/Loading"
+
 if(localStorage.getItem("token") != null) {
   console.log('You are signed in: ', localStorage.getItem("token"))
   axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("token");
@@ -13,6 +15,8 @@ else {
 }
 
 Vue.config.productionTip = false
+
+Vue.component('loading', Loading)
 
 new Vue({
   router,

@@ -7,8 +7,8 @@
         <div class="card-body">
             <div class="mb-3 p-2">
                 <h3 class="text-secondary">Add Field</h3>
-                <input v-model="field_name" type="text" placeholder="Name of field">
-                <input v-model="field_value" type="text" placeholder="Value">
+                <input class="form-control mb-1" v-model="field_name" type="text" placeholder="Name of field">
+                <input class="form-control mb-1" v-model="field_value" type="text" placeholder="Value">
                 <br>
                 <br>
                 <button class="btn btn-primary" @click="addField">Add</button>
@@ -16,13 +16,25 @@
             </div>
             <div class="mb-3 p-2">
                 <h3 class="text-secondary">Fields</h3>
-                <div v-for="(field, idx) in item_fields" :key="idx">
-                    <input :value="field.name" type="text" disabled>
-                    <input :value="field.value" type="text" disabled>
-                    <button @click="removeField(idx)" class="btn btn-danger btn-sm">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </div>
+                <div class="text-muted" v-if="item_fields.length < 1">No fields, add them using 'Add Field' above!</div>
+
+                  <transition-group name="fade">
+                  <div v-if="item_fields.length > 0" v-for="(field, idx) in item_fields" :key="idx">
+                    <div class="row mb-1">
+                      <div class="col-sm-5">
+                      <input class="form-control" :value="field.name" type="text" disabled>
+                      </div>
+                      <div class="col-sm-5">
+                      <input class="form-control" :value="field.value" type="text" disabled>
+                      </div>
+                      <div class="col-sm-2">
+                      <button @click="removeField(idx)" class="btn btn-block btn-danger">
+                          <i class="fas fa-trash-alt"></i>
+                      </button>
+                      </div>
+                    </div>
+                  </div>
+                  </transition-group>
             </div>
             <div>
                 <button @click="save" class="btn btn-primary">Save</button>
