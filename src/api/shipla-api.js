@@ -127,9 +127,25 @@ export class Container {
     }
 
     /**
+     * Returns info about container
+     * 
+     * @param {string} ref
+     * @param {callback} cb 
+     */
+    info(cb) {
+        let url = shipla_apiURL + "containers/" + this.reference + "/info"
+
+        axios.get(url).then(resp => {
+            cb(resp.data)
+        }).catch(err => {
+            console.error('info', err)
+        })
+    }
+
+    /**
      * Returns sorted items for page
      * 
-     * @param {Rinteger} index 
+     * @param {integer} index 
      * @param {callback} cb 
      * @param {string} sort_by 
      * @param {string} sort 
@@ -163,16 +179,26 @@ export class Container {
 
     /**
      * Get item from container by index
+     * Avoid using it, use getItemByRef
      * 
      * @param {integer} index 
      * @param {callback} cb 
      */
     getItem(index, cb) {
-        let url = shipla_apiURL + "containers/" + this.reference + "/items/" + index
+        this.getItemByRef(index, cb)
+    }
 
+    /**
+     * 
+     * @param {string} item_ref 
+     * @param {callback} cb 
+     */
+    getItemByRef(item_ref, cb) {
+        let url = shipla_apiURL + "containers/" + this.reference + "/items/ref/" + item_ref
+   
         axios.get(url).then(resp => {
             cb(resp.data)
-            //console.log('Wczytujemy', resp.data)
+
         }).catch(err => {
             console.error('Error getItem', err)
         })
@@ -191,11 +217,11 @@ export class Container {
     /**
      * Set item, this will set actual objcect instead of updating fields
      * 
-     * @param {integer} id 
+     * @param {integer} item_ref 
      * @param {object} item 
      */
-    setItem(id, item) {
-        let url = shipla_apiURL + "containers/" + this.reference + "/items/" + id 
+    setItem(item_ref, item) {
+        let url = shipla_apiURL + "containers/" + this.reference + "/items/" + item_ref 
 
         return axios.post(url, { data: item })
     }
@@ -203,21 +229,21 @@ export class Container {
     /**
      * Update item with new data
      * 
-     * @param {integer} id 
+     * @param {integer} item_ref
      * @param {object} data 
      */
-    updateItem(id, data) {
-        let url = shipla_apiURL + "containers/" + this.reference + "/items/" + id 
+    updateItem(item_ref, data) {
+        let url = shipla_apiURL + "containers/" + this.reference + "/items/" + item_ref
 
         return axios.patch(url, { data: data })
     }
     
     /**
-     * Remove item with ID (only by owner of that item or container owner)
-     * @param {integer} id 
+     * Remove item with reference (only by owner of that item or container owner)
+     * @param {integer} item_ref
      */
-    removeItem(id) {
-        let url = shipla_apiURL + "containers/" + this.reference + "/items/" + id 
+    removeItem(item_ref) {
+        let url = shipla_apiURL + "containers/" + this.reference + "/items/" + item_ref
 
         return axios.delete(url)
     }

@@ -8,10 +8,11 @@
                   Total items: {{ items.length }}
               </div>
               <div class="bg-light mb-3 p-2 shadow rounded" v-for="(item,idx) in items_arr" :key="idx">
-                  Item #{{ idx }}
+                  Item #{{ idx }} 
 
                   <span class="border" v-for="(item_f,idx) in item" :key="idx">
                       {{ item_f.name }} -> {{ item_f.value}}
+                  
                   </span>
 
                   <div class="mt-2">
@@ -46,6 +47,7 @@ export default {
 
   methods: {
     load() {
+      this.loading = true;
       Container.container(this.reference).getAllItems(items => {
         this.items_arr = [];
         this.items = [];
@@ -58,9 +60,10 @@ export default {
         this.loading = false;
       });
     },
-    removeItem(id) {
+    removeItem(idx) {
+
       Container.container(this.reference)
-        .removeItem(id)
+        .removeItem(this.items[idx].meta.ref)
         .then(resp => {
           alert("Item removed!");
           this.load();
