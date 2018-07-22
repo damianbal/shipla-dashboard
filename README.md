@@ -5,6 +5,8 @@ Dashboard to manage Shipla Platform.
 
 This repo contains shipla-api.js and shipla-config.js which you can use with your app, it will make development with Shipla so much easier. 
 
+[Shipla Dashboard](http://portfolio.damianbalandowski.com/shipla-dashboard/)
+
 ## Features
 * Sign in / Sign up
 * Create or remove containers
