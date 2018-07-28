@@ -44,6 +44,10 @@ export default {
           this.$router.push({ name: "home" });
           this.loading = false;
         }
+        else {
+          this.loading = false; 
+          alert("Could not sign in, wrong email or password!")
+        }
       });
     }
   },

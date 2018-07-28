@@ -11,7 +11,7 @@
         <div class="navbar-nav">
           <router-link :to="{ name: 'home' }" class="nav-item nav-link">Home</router-link>
 
-          <a v-if="signed_in == null" class="nav-item nav-link" href="#">Sign Up</a>
+          <router-link v-if="signed_in == null" class="nav-item nav-link" :to="{ name: 'sign-up' }">Sign Up</router-link>
           <router-link v-if="signed_in == null" class="nav-item nav-link" :to="{ name: 'sign-in' }">Sign In</router-link>
           <router-link v-if="signed_in" class="nav-item nav-link" :to="{ name: 'containers' }">Containers</router-link>
           <router-link v-if="signed_in" class="nav-item nav-link" :to="{ name: 'account' }">Account</router-link>

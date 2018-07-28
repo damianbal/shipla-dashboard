@@ -29,6 +29,9 @@ Serve or distribute to server, change shipla_apiURL to your Shipla URL.
 
 ## Release History
 
+* 0.1.1
+    * Tweaks in views
+    * Fixed loading data in Account page
 * 0.1.0
     * First version
 
